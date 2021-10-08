@@ -1,27 +1,26 @@
-function [parasite_array, food_array] = stimulate(domain, parasites, food, iterations, f1, f3, f2)
+function [parasite_array, food_array] = stimulate(domain, parasites, food, iterations, f1, f3, f2, file, make_video)
 
 
 % video writer
-file = "stimulation.avi";
-video = true;
-domain_size = 200;
+file 
 video_writer = VideoWriter(file);
 open(video_writer);
 
-if video
-    fig = figure;
-    axis([1 domain_size 1 domain_size]);
-end
-
-% initializae output array
+% population counts
 parasite_array = zeros(1, iterations);
 food_array = zeros(1, iterations);
 
+domain_size = 200;
 
+% plot
+if make_video
+    f_id = figure;
+    axis([1 domain_size 1 domain_size]);
+end
 
 for step = 1:iterations
-    if video
-        figure(fig);
+    if make_video
+        figure(f_id);
     end
     num_parasites = size(parasites, 1);
     
@@ -110,7 +109,7 @@ for step = 1:iterations
     end
    
     
-    if video && mod(step, 5) == 0
+    if make_video && mod(step, 5) == 0
         plot(parasites(:, 2), parasites(:, 1), 'r.', 'MarkerSize', 10);
         hold on;
         plot(food(:, 2), food(:, 1), 'b.', 'MarkerSize', 10);
@@ -132,7 +131,7 @@ for step = 1:iterations
     food_array(step) = length(food);
 end
 
-if video
+if make_video
     close(video_writer);
 end
 
