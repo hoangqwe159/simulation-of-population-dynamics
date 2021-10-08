@@ -1,14 +1,14 @@
-function [parasite_array, food_array] = stimulate(domain, parasites, food, iterations, f1, f3, f2)
+function [parasite_array, food_array] = stimulate(domain, parasites, food, iterations, f1, f2, f3, video)
 
 
 % video writer
 file = "stimulation.avi";
-video = true;
 domain_size = 200;
-video_writer = VideoWriter(file);
-open(video_writer);
+
 
 if video
+    video_writer = VideoWriter(file);
+    open(video_writer);
     fig = figure;
     axis([1 domain_size 1 domain_size]);
 end
@@ -19,98 +19,101 @@ food_array = zeros(1, iterations);
 
 
 
-for step = 1:iterations
+for iteration = 1:iterations
     if video
         figure(fig);
     end
-    num_parasites = size(parasites, 1);
+    n_parasites = size(parasites, 1);
     
-    % Parasite movement
-    for i = 1:num_parasites
-        
-        % check if it is dead
-        if parasites(i, 1) ~= -1
-        
-            old_y = parasites(i, 1:1);
-            old_x = parasites(i, 2:2);
+    
+    for i = 1:n_parasites 
+      
+        % if parasite is alive
+        if parasites(i, 1) ~= 0        
+            current_row = parasites(i, 1:1);
+            current_col = parasites(i, 2:2);
+            
+            % parasite moves randomly
+            u = rand;            
+            if u < 0.25  
+                next_col = current_col;
+                next_row = current_row + 1;
+            elseif u < 0.5          
+                next_col = current_col;
+                next_row = current_row - 1;
+            elseif u < 0.75
+                next_col = current_col + 1;
+                next_row = current_row;
+            else
+                next_col = current_col - 1;
+                next_row = current_row;
+            end
 
-            [dx, dy] = random_movement();
-            new_x = old_x + dx;
-            new_y = old_y + dy;
-
-            % parasite has reached peak age - delete it
+            % parasite dies after f1 iterations
             if parasites(i, 3:3) == f1 + 1
-                parasites(i, 1:2) = [-1 -1];
-                domain(old_y, old_x) = 0;
+                parasites(i, 1:2) = [0 0];
+                domain(current_row, current_col) = 0;
 
-            % parasite has valid new position
-            elseif new_x >= 1 && new_x <= 200 && new_y >= 1 && new_y <= 200
+            % validate new position of parasite
+            elseif next_col >= 1 && next_col <= domain_size && next_row >= 1 && next_row <= domain_size
 
-                % collision with food
-                if domain(new_y, new_x) == -1
+                % if new position is occupied by food
+                if domain(next_row, next_col) == -1
+                    % the food in domain is replaced by a parasite
+                    domain(next_row, next_col) = 1;
 
-                    % add parasite to mask at new position
-                    % leave parasite existing at initial position
-                    domain(new_y, new_x) = 1;
+                    % remove the food from list                    
+                    food_index = find(ismember(food,[next_row next_col], 'rows'));
+                    food(food_index, :) = [0 0];
 
-                    % delete the food
-                    % find the food at new_y, new_x
-                    food_index = find(ismember(food,[new_y new_x], 'rows'));
-                    
-                    
-                    % delete the food
-                    food(food_index, :) = [-1 -1];
+                    % parasite replaces the food
+                    parasites(i, 1:2) = [next_row, next_col];
 
-                    % update parasite's position
-                    parasites(i, 1:2) = [new_y, new_x];
+                    % new parasite is placed in the orginal cell
+                    parasites(end + 1, :) = [current_row, current_col, 0];
 
-                    % add new parasite's position and age to vector
-                    parasites(end + 1, :) = [old_y, old_x, 0];
-
-                % empty space
-                elseif domain(new_y, new_x) == 0
-                    parasites(i, 1:2) = [new_y, new_x];   
-                    % update mask
-                    domain(old_y, old_x) = 0;
-                    domain(new_y, new_x) = 1;
+                % if new position is empty
+                elseif domain(next_row, next_col) == 0
+                    parasites(i, 1:2) = [next_row, next_col];   
+                    domain(current_row, current_col) = 0;
+                    domain(next_row, next_col) = 1;
                 end
             end    
         end
     end
     
-    % age parasites
+    % incsrease f1 of parasite after each iteration
     parasites(:, 3) = parasites(:, 3) + 1;
 
-    num_food = size(food, 1);
+    n_food = size(food, 1);
 
-    % food deaths
-    for i = 1:num_food
-       if food(i, 1) ~= -1
-          if rand < f2
-             y_pos = food(i, 1);
-             x_pos = food(i, 2);
-             
-             domain(y_pos, x_pos) = 0;
-             food(i, :) = [-1 -1];
+    % food is removed if u < f2
+    for i = 1:n_food
+       if food(i, 1) ~= 0
+          u = rand;
+          if u < f2            
+             domain(food(i, 1), food(i, 2)) = 0;
+             food(i, :) = [0 0];
           end 
        end
     end
     
-    % Food generation at random location
+    % create f3 new food agents at random position
     for i = 1:f3
-        x = randi([1 200]);
-        y = randi([1 200]);
-        while domain(y, x) == -1 || domain(y, x) == 1
-            x = randi([1 200]);
-            y = randi([1 200]); 
+        col = randi([1 domain_size]);
+        row = randi([1 domain_size]);
+        
+        while domain(row, col) == -1 || domain(row, col) == 1
+            col = randi([1 domain_size]);
+            row = randi([1 domain_size]); 
         end
 
-        domain(y, x) = -1;
-        food(end + 1, :) = [y x];
+        domain(row, col) = -1;
+        food(end + 1, :) = [row col];
     end
    
     
-    if video && mod(step, 5) == 0
+    if video && mod(iteration, 4) == 0
         plot(parasites(:, 2), parasites(:, 1), 'r.', 'MarkerSize', 10);
         hold on;
         plot(food(:, 2), food(:, 1), 'b.', 'MarkerSize', 10);
@@ -120,16 +123,13 @@ for step = 1:iterations
         writeVideo(video_writer, frame);
     end
     
-    % reallocate matrices
-    mask_of_live_parasites = parasites(:, 1) ~= -1;
-    parasites = parasites(mask_of_live_parasites, :);
-
-    mask_of_live_food = food(:, 1) ~= -1;
-    food = food(mask_of_live_food, :);
+    % remove dead parasite
+    parasites = parasites(parasites(:, 1) ~= 0,:);
+    food = food(food(:, 1) ~= 0, : );
          
-    % record population values
-    parasite_array(step) = length(parasites);
-    food_array(step) = length(food);
+    % cout number of parasites and food after each iteration
+    parasite_array(iteration) = size(parasites, 1);
+    food_array(iteration) = size(food, 1);
 end
 
 if video
