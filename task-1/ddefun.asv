@@ -1,0 +1,5 @@
+function Model = DelayGrowthFn(t,X,Z,r, tau, K)
+Xlag = Z(:,1);
+Model = r*X*(1-Xlag/K);
+end
+
