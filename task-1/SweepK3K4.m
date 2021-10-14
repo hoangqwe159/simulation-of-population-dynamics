@@ -30,7 +30,7 @@ j = 1;
 for k3i = potential_k 
     for k4i = potential_k
         [~,X] = ode45(@(t,X)ParasiteGrowthModel(t,X,k1,k2,k3i,k4i,k5), tspan, X0);         
-        if all(all(X >= 0)) && ((X(end,1) <= tol) || (abs(X(end,2)-2) <= tol))   
+        if isSuccessful(X, tol)   
             k3k4(j,1) = k3i;                        % records successful values of k3
             k3k4(j,2) = k4i;                        % records successful values of k4
             if (abs(X(end,2)-2) <= tol)

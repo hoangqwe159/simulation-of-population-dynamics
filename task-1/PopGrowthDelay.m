@@ -8,8 +8,4 @@ function [yval] = PopGrowthDelay(y0, r, h, K, s, steps)
         end
         yval(i+1) = yval(i) * (1 + h*r - h*r*temp/K);
     end
-%     figure
-%     plot(1:steps+1,yval,"b","LineWidth",2)
-%     title(["s = ",num2str(s)])
-
 end

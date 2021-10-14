@@ -91,7 +91,7 @@ title("r = 2, h = 0.01, s = 300");
 
 subplot(4,2,7)
 plot(1:2001,y_s_350);
-title("r = 2, h = 0.01, s = 350");
+title("r =2, h = 0.05, s = 350");
 
 subplot(4,2,8)
 plot(1:2001,y_s_400);
