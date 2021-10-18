@@ -1,4 +1,4 @@
-%% 2d testing
+%% lhs_impl testing
 
 % plotting a LHS sampling for a 5x5 grid on [0,1]x[0,1]
 figure
@@ -21,19 +21,26 @@ plot([5/5 5/5],[0 1],'k')
 X = lhs_impl(5, 2, [0 1]);
 scatter(X(:,1),X(:,2),50,'filled');
 
+figure
+hold on 
+X = lhs_impl(10,2, [0 1]);
+grid on
+scatter(X(:,1),X(:,2),50,'filled')
+
 %% 3d latin hypercube sampling
-% 
-% k1 = 1;
-% k2 = 2;
-% x1_0 = 1;
-% x2_0 = 1;
-% tol = 0;
-% time = 20;
-% lins
-% X = lhs_impl(20,3,[0 50]);
-% 
-% figure
-% hold on
-% grid on
-% 
-% scatter(X(:,1),X(:,2),50,'filled')
+
+k1 = 1;
+k2 = 2;
+x1_0 = 1;
+x2_0 = 1;
+tol = 0;
+time = 20;
+
+X = lhs_impl(20,3,[0 50]);
+
+% TODO: draw grid lines
+
+figure
+hold on
+grid on
+scatter(X(:,1),X(:,2),50,'filled')
