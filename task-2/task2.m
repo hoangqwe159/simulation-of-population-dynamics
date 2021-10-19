@@ -22,25 +22,32 @@ X = lhs_impl(5, 2, [0 1]);
 scatter(X(:,1),X(:,2),50,'filled');
 
 figure
-hold on 
+hold on
 X = lhs_impl(10,2, [0 1]);
 grid on
 scatter(X(:,1),X(:,2),50,'filled')
 
-%% 3d latin hypercube sampling
+figure
+hold on
+X = lhs_impl(10,3, [0 1]);
+grid on
+scatter3(X(:,1),X(:,2),X(:,3),50,'filled')
+
+%% 3D latin hypercube sampling
 
 k1 = 1;
 k2 = 2;
 x1_0 = 1;
 x2_0 = 1;
+x0 = [x1_0, x2_0];
 tol = 0;
-time = 20;
+time = [0 20];
 
-X = lhs_impl(10,3,[0 50]);
-
-% TODO: draw grid lines
+X = lhs_impl(20,3,[0 50]);
+valid = lhs_system(tol, time, x0, k1, k2, X);
 
 figure
 hold on
 grid on
+
 scatter3(X(:,1),X(:,2),X(:,3),50,'filled')
