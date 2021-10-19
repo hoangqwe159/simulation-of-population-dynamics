@@ -3,9 +3,7 @@ function [X] = lhs_impl(n, d, range)
 % d = number of dimensions
 % range = [lower upper]
 
-X = [];
-o = rng;
-
+X = zeros(n,d);
 cell = range(2) / n;
 rx = range(1):cell:range(2);
 stratas = zeros(2, length(rx) -1);
@@ -26,7 +24,6 @@ for i=1:1:d
     end
     v = av(1) + rand*(av(2)-av(1));
     arr(n) = v;
-    X = [X arr];
+    X(:,i) = arr;
 end
-
 end
