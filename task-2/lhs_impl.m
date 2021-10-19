@@ -14,8 +14,6 @@ for i=1:1:length(rx)-1
     stratas(:,i) = [rx(i) rx(i+1)];
 end
 
-stratas
-
 for i=1:1:d
     arr = zeros(n,1);
     av = stratas;

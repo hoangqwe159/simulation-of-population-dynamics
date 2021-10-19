@@ -43,4 +43,4 @@ X = lhs_impl(10,3,[0 50]);
 figure
 hold on
 grid on
-scatter(X(:,1),X(:,2),50,'filled')
+scatter3(X(:,1),X(:,2),X(:,3),50,'filled')
