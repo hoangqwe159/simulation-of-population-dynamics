@@ -36,7 +36,7 @@ x2_0 = 1;
 tol = 0;
 time = 20;
 
-X = lhs_impl(20,3,[0 50]);
+X = lhs_impl(10,3,[0 50]);
 
 % TODO: draw grid lines
 
