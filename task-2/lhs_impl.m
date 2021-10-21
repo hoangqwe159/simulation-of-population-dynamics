@@ -3,6 +3,13 @@ function [X] = lhs_impl(n, d, range)
 % d = number of dimensions
 % range = [lower upper]
 
+% lhs_impl produces a valid latin hypercube sample over d dimensions
+% the code generates a upper / n stratifications then randomly selects a
+% valid set of stratifications at each grid location
+
+% Output X is the valid set of latin hypercube sample coordinates over d
+% dimensions
+
 X = zeros(n,d);
 cell = range(2) / n;
 rx = range(1):cell:range(2);

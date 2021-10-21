@@ -49,5 +49,4 @@ valid = lhs_system(tol, time, x0, k1, k2, X);
 figure
 hold on
 grid on
-
-scatter3(X(:,1),X(:,2),X(:,3),50,'filled')
+scatter3(X(:,1),X(:,2),X(:,3),20,'filled')
