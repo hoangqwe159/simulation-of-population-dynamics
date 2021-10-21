@@ -35,18 +35,38 @@ scatter3(X(:,1),X(:,2),X(:,3),50,'filled')
 
 %% 3D latin hypercube sampling
 
+n = 50;
 k1 = 1;
 k2 = 2;
 x1_0 = 1;
 x2_0 = 1;
 x0 = [x1_0, x2_0];
-tol = 0;
+tol = 0.25;
 time = [0 20];
 
-X = lhs_impl(20,3,[0 50]);
-valid = lhs_system(tol, time, x0, k1, k2, X);
+iterations = [];
+for i = 1:100
+    X = lhs_impl(n,3,[0 50]);
+    valid = lhs_system(tol, time, x0, k1, k2, X);
+    iterations = [iterations; [X valid]];
+end
 
 figure
 hold on
 grid on
-scatter3(X(:,1),X(:,2),X(:,3),20,'filled')
+
+successful = find(iterations(:,4) == 1);
+unsuccessful = find(iterations(:,4) == 0);
+
+scatter3(iterations(successful,1),iterations(successful,2),iterations(successful,3),50,'filled');
+hold on
+
+scatter3(iterations(unsuccessful,1),iterations(unsuccessful,2),iterations(unsuccessful,3),50,'filled');
+hold on
+
+legend('successful', 'unsuccessful');
+
+
+
+
+
