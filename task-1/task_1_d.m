@@ -21,9 +21,11 @@ xlabel('k4')
 ylabel('k5')
 xlim([0 50])
 hold on
-plot([0.5 1.5 5], [3.5 0.5 0], 'blue','LineWidth', 1.5)
-plot([1.5 11.5 46.5], [16 14 12], 'black','LineWidth', 1.5)
-legend('X1 \rightarrow 0 + tol','X2 \rightarrow 2 ± tol','X1 \rightarrow 0 + tol and X2 \rightarrow 2 ± tol', 'k_5 = 0.635k_4^2 - 4.27k_4 + 5.48', 'k_5 = 0.003k_4^2 - 0.25k_4 + 16')
+plot([0.5 5], [3.5 0], 'blue','LineWidth', 1.5)
+x = 0:0.5:50;
+y = 0.0027*x.^2 - 0.2203*x + 16.3244;
+plot(x, y, 'black','LineWidth', 1.5)
+legend('X1 \rightarrow 0 + tol','X2 \rightarrow 2 ± tol','X1 \rightarrow 0 + tol and X2 \rightarrow 2 ± tol', 'k_5 = -0.78k_4 + 3.89', 'k_5 = 0.0027k_4^2 - 0.2203k_4 + 16.3244')
 hold off
 title({'Parameter Sweep k4 and k5 for Tol = 10^{-1}'})
 %% Plot Tol = 10^-2
@@ -33,8 +35,10 @@ xlabel('k4')
 ylabel('k5')
 xlim([0 50])
 hold on
-plot([0.5 1.5 5], [3.5 0.5 0], 'blue','LineWidth', 1.5)
-plot([1.5 11.5 46.5], [16 14 12], 'black','LineWidth', 1.5)
-legend('X1 \rightarrow 0 + tol','X2 \rightarrow 2 ± tol', 'k_5 = 0.635k_4^2 - 4.27k_4 + 5.48', 'k_5 = 0.003k_4^2 - 0.25k_4 + 16')
+plot([0.5 5], [3.5 0], 'blue','LineWidth', 1.5)
+x = 0:0.5:50;
+y = 0.0027*x.^2 - 0.2203*x + 16.3244;
+plot(x, y, 'black','LineWidth', 1.5)
+legend('X1 \rightarrow 0 + tol','X2 \rightarrow 2 ± tol', 'k_5 = -0.78k_4 + 3.89', 'k_5 = 0.0027k_4^2 - 0.2203k_4 + 16.3244')
 hold off
 title({'Parameter Sweep k4 and k5 for Tol = 10^{-2}'})
