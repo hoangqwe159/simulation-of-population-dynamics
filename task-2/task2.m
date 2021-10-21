@@ -41,11 +41,11 @@ k2 = 2;
 x1_0 = 1;
 x2_0 = 1;
 x0 = [x1_0, x2_0];
-tol = 0.25;
+tol = 10^-2;
 time = [0 20];
 
 samples = [];
-for i = 1:100
+for i = 1:10
     X = lhs_impl(n,3,[0 50]);
     valid = lhs_system(tol, time, x0, k1, k2, X);
     samples = [samples; [X valid]];

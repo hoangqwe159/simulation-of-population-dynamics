@@ -22,6 +22,7 @@ end
 for i=1:1:d
     arr = zeros(n,1);
     av = stratas;
+    
     for j=1:1:n-1
         l = randi([1, length(av)]);
         s = av(:,l);
@@ -29,6 +30,7 @@ for i=1:1:d
         arr(j) = v;
         av(:,l) = [];
     end
+    
     v = av(1) + rand*(av(2)-av(1));
     arr(n) = v;
     X(:,i) = arr;
