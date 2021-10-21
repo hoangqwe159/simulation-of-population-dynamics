@@ -44,28 +44,65 @@ x0 = [x1_0, x2_0];
 tol = 0.25;
 time = [0 20];
 
-iterations = [];
+samples = [];
 for i = 1:100
     X = lhs_impl(n,3,[0 50]);
     valid = lhs_system(tol, time, x0, k1, k2, X);
-    iterations = [iterations; [X valid]];
+    samples = [samples; [X valid]];
 end
 
+% both
 figure
 hold on
 grid on
 
-successful = find(iterations(:,4) == 1);
-unsuccessful = find(iterations(:,4) == 0);
+successful = find(samples(:,4) == 1);
+unsuccessful = find(samples(:,4) == 0);
 
-scatter3(iterations(successful,1),iterations(successful,2),iterations(successful,3),50,'filled');
+x1 = samples(successful,1);
+y1 = samples(successful,2);
+z1 = samples(successful,3);
+
+x0 = samples(unsuccessful,1);
+y0 = samples(unsuccessful,2);
+z0 = samples(unsuccessful,3);
+
+scatter3(x1,y1,z1,50,'filled', 'blue');
 hold on
 
-scatter3(iterations(unsuccessful,1),iterations(unsuccessful,2),iterations(unsuccessful,3),50,'filled');
+scatter3(x0,y0,z0,50,'filled', 'red');
 hold on
 
 legend('successful', 'unsuccessful');
+xlabel('k3');
+ylabel('k4');
+zlabel('k5');
 
+% successful
+figure
+hold on
+grid on
+
+scatter3(x1,y1,z1,50,'filled','blue');
+hold on
+
+legend('successful');
+xlabel('k3');
+ylabel('k4');
+zlabel('k5');
+
+% unsuccessful
+figure
+hold on
+grid on
+
+scatter3(x0,y0,z0,50,'filled','red');
+hold on
+
+legend('unsuccessful');
+xlabel('k3');
+ylabel('k4');
+zlabel('k5');
 
 
 
