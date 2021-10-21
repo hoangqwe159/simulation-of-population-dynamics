@@ -28,4 +28,4 @@ gscatter(k3_small_tol(:,1),zeros(length(k3_small_tol),1),k3_small_tol(:,2),[1 0.
 legend('X1 \rightarrow 0 + tol','X2 \rightarrow 2 ± tol','X1 \rightarrow 0 + tol and X2 \rightarrow 2 ± tol')
 xlabel('k3')
 xlim([0 50])
-title({'Parameter Sweep k3 for Tol = 10^{-1}'})
+title({'Parameter Sweep k3 for Tol = 10^{-2}'})
