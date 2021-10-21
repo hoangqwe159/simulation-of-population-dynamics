@@ -10,11 +10,12 @@ function valid = lhs_system(tol, time, x0, k1, k2, X)
 
 valid = zeros(length(X(:,1)), 1);
 
+k3 = X(:,1);
+k4 = X(:,2);
+k5 = X(:,3);
+
 for i = 1:length(X(:,1))
-    k3 = X(i,1);
-    k4 = X(i,2);
-    k5 = X(i,3);
-    [~,y] = ode45(@(t,y0) model(t, y0, k1, k2, k3, k4, k5), time, x0);
+    [~,y] = ode45(@(t,y0) model(t, y0, k1, k2, k3(i), k4(i), k5(i)), time, x0);
     
     % X -> 0 + tol
     if all(all(y >= 0)) && abs(y(end,1)) <= tol
