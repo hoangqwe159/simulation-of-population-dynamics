@@ -45,7 +45,7 @@ tol = 10^-2;
 time = [0 20];
 
 samples = [];
-for i = 1:10
+for i = 1:100
     X = lhs_impl(n,3,[0 50]);
     valid = lhs_system(tol, time, x0, k1, k2, X);
     samples = [samples; [X valid]];

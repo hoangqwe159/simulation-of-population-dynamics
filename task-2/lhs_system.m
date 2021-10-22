@@ -19,8 +19,12 @@ k5 = X(:,3);
 for i = 1:length(X(:,1))
     [~,y] = ode45(@(t,y0) model(t, y0, k1, k2, k3(i), k4(i), k5(i)), time, x0);
 
+    if not(all(all(y >= 0)))
+        continue
+    end
+    
     % X -> 0 + tol
-    if all(all(y >= 0)) && y(end,1) <= tol
+    if y(end,1) <= tol
         valid(i) = 1;
     end
 
@@ -29,6 +33,7 @@ for i = 1:length(X(:,1))
         valid(i) = 1;
     end
 end
+
 end
 
 function [res] = model(~, y, k1, k2, k3, k4, k5)
