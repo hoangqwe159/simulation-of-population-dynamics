@@ -1,8 +1,10 @@
 function valid = lhs_system(tol, time, x0, k1, k2, X)
 % tol = tolerance
-% k1
-% k2
-% X = lhs matrix
+% time = time span of simulation
+% k1 = birth rate
+% k2 = death rate
+% X = sample where X(:,1) is good growth, X(:,2) is food decay and X(:,3)
+% is food consumption
 
 % generates a column vector indicating whether each latin hypercube sample
 % is valid according to the specification
@@ -16,17 +18,22 @@ k5 = X(:,3);
 
 for i = 1:length(X(:,1))
     [~,y] = ode45(@(t,y0) model(t, y0, k1, k2, k3(i), k4(i), k5(i)), time, x0);
-    
-    % X -> 0 + tol
-    if all(all(y >= 0)) && abs(y(end,1)) <= tol
-        valid(i) = 1;
+
+    if not(all(all(y >= 0)))
+        continue
     end
     
-    % X -> 2 + tol
+    % X -> 0 + tol
+    if y(end,1) <= tol
+        valid(i) = 1;
+    end
+
+    % X -> 2 +/- tol
     if abs(y(end,2) - 2) <= tol
         valid(i) = 1;
     end
 end
+
 end
 
 function [res] = model(~, y, k1, k2, k3, k4, k5)
