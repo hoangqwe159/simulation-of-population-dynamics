@@ -55,6 +55,7 @@ xlabel("Step");
 ylabel("Population size");
 
 %% r = 2, h = 0.01
+% This a better visualization
 y_s_50 = PopGrowthDelay(50,2,0.01,100,50,2000);
 y_s_100 = PopGrowthDelay(50,2,0.01,100,100,2000);
 y_s_150 = PopGrowthDelay(50,2,0.01,100,150,2000);
@@ -97,6 +98,7 @@ subplot(4,2,8)
 plot(1:2001,y_s_400);
 title("r = 2, h = 0.01, s = 400");
 %% r = 0.5, h = 0.05
+% This a better visualization
 y_s_50 = PopGrowthDelay(50,0.5,0.05,100,50,2000);
 y_s_100 = PopGrowthDelay(50,0.5,0.05,100,100,2000);
 y_s_150 = PopGrowthDelay(50,0.5,0.05,100,150,2000);

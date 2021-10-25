@@ -1,18 +1,11 @@
 %% Perform parameter sweep for k3 and k4, k increament = 0.5
 Tol_1 = 10^-1;
 Tol_2 = 10^-2;
-k_min = 0;
-k_max = 50;
-k_inc = 0.5;
-t_min = 0;
-t_max = 20;
-X1_init = 1;
-X2_init = 1;
 k1 = 1;
 k2 = 2;
 k5 = 3;
-[k3k4_big_tol] = SweepK3K4(Tol_1,k_min,k_max,k_inc,t_min,t_max,X1_init,X2_init,k1,k2,k5); % Tol = 10^-1
-[k3k4_small_tol] = SweepK3K4(Tol_2,k_min,k_max,k_inc,t_min,t_max,X1_init,X2_init,k1,k2,k5); % Tol = 10^-2
+[k3k4_big_tol] = SweepK3K4(Tol_1,k1,k2,k5); % Tol = 10^-1
+[k3k4_small_tol] = SweepK3K4(Tol_2,k1,k2,k5); % Tol = 10^-2
 %% Plot Tol = 10^-1
 figure
 

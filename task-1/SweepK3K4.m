@@ -1,4 +1,4 @@
-function k3k4 = SweepK3K4(tol, minK, maxK, inc, minT, maxT, X1_init, X2_init, k1, k2, k5)
+function [k3k4] = SweepK3K4(tol, k1, k2, k5)
 % Function perform parameter sweep for k3 and k4. It use ODE45 function to solve
 % the differential equations. Then apply conditions into the solutions and
 % record the successful value of k.
@@ -10,21 +10,21 @@ function k3k4 = SweepK3K4(tol, minK, maxK, inc, minT, maxT, X1_init, X2_init, k1
 
 % Inputs:
 % tol:      Tol value.
-% k_min:    Lower limit of k.
-% k_max:    Upper limit of k.
-% k_inc:    Increment of k value.
-% t_min:    Lower bound of time.
-% t_max:    Upper bound of time.
-% X1_init:  Initial value of X1.
-% X2_init:  Initial value of X2.
 % k1:       k1 value.
 % k2:       k2 value.
 % k5:       k5 value.
 
+k_min = 0;
+k_max = 50;
+k_inc = 0.5;
+t_min = 0;
+t_max = 20;
+X1_init = 1;
+X2_init = 1;
 
-tspan = [minT maxT];                                        
+tspan = [t_min t_max];                                        
 X0 = [X1_init X2_init];                                         
-potential_k = linspace(minK,maxK,((maxK-minK)/inc)+1);      
+potential_k = linspace(k_min,k_max,((k_max-k_min)/k_inc)+1);      
 k3k4 = zeros(length(potential_k),3);    
 j = 1;                                                  
 for k3i = potential_k 
