@@ -4,6 +4,6 @@ function bool = isSuccessful(X, tol)
 % Inputs:
 % X:    System value.
 % Tol:  Tol value.
-bool = all(all(X >= 0)) && ((X(end,1) <= tol) || (abs(X(end,2)-2) <= tol));
+bool = all(((X(end,1) <= tol) || (abs(X(end,2)-2) <= tol) && all(X >= 0)));
 end
 
