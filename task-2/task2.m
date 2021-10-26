@@ -56,12 +56,17 @@ figure
 hold on
 grid on
 
-successful = find(samples(:,4) == 1);
+x1_indicies = find(samples(:,4) == 1);
+x2_indicies = find(samples(:,4) == 2);
 unsuccessful = find(samples(:,4) == 0);
 
-x1 = samples(successful,1);
-y1 = samples(successful,2);
-z1 = samples(successful,3);
+x1 = samples(x1_indicies,1);
+y1 = samples(x1_indicies,2);
+z1 = samples(x1_indicies,3);
+
+x2 = samples(x2_indicies,1);
+y2 = samples(x2_indicies,2);
+z2 = samples(x2_indicies,3);
 
 x0 = samples(unsuccessful,1);
 y0 = samples(unsuccessful,2);
@@ -70,15 +75,18 @@ z0 = samples(unsuccessful,3);
 scatter3(x1,y1,z1,50,'filled', 'blue');
 hold on
 
+scatter3(x2,y2,z2,50,'filled', 'green');
+hold on
+
 scatter3(x0,y0,z0,50,'filled', 'red');
 hold on
 
-legend('successful', 'unsuccessful');
+legend('x1', 'x2', 'unsuccessful');
 xlabel('k3');
 ylabel('k4');
 zlabel('k5');
 
-% successful
+% x1
 figure
 hold on
 grid on
@@ -86,7 +94,16 @@ grid on
 scatter3(x1,y1,z1,50,'filled','blue');
 hold on
 
-legend('successful');
+legend('x1');
+xlabel('k3');
+ylabel('k4');
+zlabel('k5');
+
+% x2
+scatter3(x2,y2,z2,50,'filled','green');
+hold on
+
+legend('x2');
 xlabel('k3');
 ylabel('k4');
 zlabel('k5');

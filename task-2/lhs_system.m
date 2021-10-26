@@ -23,14 +23,14 @@ for i = 1:length(X(:,1))
         continue
     end
     
-    % X -> 0 + tol
+    % X1 -> 0 + tol
     if y(end,1) <= tol
         valid(i) = 1;
     end
 
-    % X -> 2 +/- tol
+    % X2 -> 2 +/- tol
     if abs(y(end,2) - 2) <= tol
-        valid(i) = 1;
+        valid(i) = 2;
     end
 end
 
